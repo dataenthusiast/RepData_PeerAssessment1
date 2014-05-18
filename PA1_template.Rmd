@@ -2,16 +2,35 @@
 
 
 ## Loading and preprocessing the data
+activity <- read.csv("activity.csv")
 
 
+## What is mean total number of steps taken per day? 
+    #For this part of the assignment, you can ignore the missing values in the dataset.
+    activityClean <- activity[complete.cases(activity$steps),]
+    
+    library(lubridate)
+    
+    #draw histogram of total number of steps taken each day
+    hist(day(activityClean$date))
 
-## What is mean total number of steps taken per day?
-
-
-
+    #Calculate and report the mean and median total number of steps taken per day
+    meanSteps <- tapply(day(activityClean$date), activityClean$steps ,mean)
+    hist(meanSteps)
+    
+    medianSteps <- tapply(day(activityClean$date), activityClean$steps ,median)
+    hist(medianSteps)
+    
 ## What is the average daily activity pattern?
 
-
+    #Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged             
+    #across all days (y-axis)
+    timeSeries <- activityClean
+    timeSeriesAvg <- tapply(timeSeries$interval,timeSeries$steps,mean)
+    hist(timeSeriesAvg)
+    
+    #Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+    summary(timeSeriesAvg)
 
 ## Imputing missing values
 
